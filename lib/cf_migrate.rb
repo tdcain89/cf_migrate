@@ -18,6 +18,8 @@ module CfMigrate
   	  tmp = Dir.chdir(folder)
       files = `git ls-files --others --modified | grep '\.sql$'`.split($/)
 
+      tmp = Dir.chdir("/")
+
       return files
     end
   end
