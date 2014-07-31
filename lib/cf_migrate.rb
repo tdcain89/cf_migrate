@@ -1,22 +1,24 @@
 require "cf_migrate/version"
 
 module CfMigrate
-  def self.check
-    sprocs = parse_folder("db/sprocs/")
-    functions = parse_folder("db/functions/")
-    views = parse_folder("db/views/")
+  class Migrate
+    def check
+      sprocs = parse_folder("db/sprocs/")
+      functions = parse_folder("db/functions/")
+      views = parse_folder("db/views/")
     
-    puts "Sprocs to Build: #{sprocs}"
-    puts "Functions to Build: #{functions}"
-    puts "Views to Build: #{views}"
-  end
+      puts "Sprocs to Build: #{sprocs}"
+      puts "Functions to Build: #{functions}"
+      puts "Views to Build: #{views}"
+    end
 
-  private 
+    private 
 
-  def parse_folder(folder)
-  	tmp = chdir(folder)
-    files = `git ls-files --others --modified | grep '\.sql$'`.split($/)
+    def parse_folder(folder)
+  	  tmp = Dir.chdir(folder)
+      files = `git ls-files --others --modified | grep '\.sql$'`.split($/)
 
-    return files
+      return files
+    end
   end
 end
