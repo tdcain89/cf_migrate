@@ -6,7 +6,9 @@ TIME_OF_RUN = Time.now.strftime("%Y%m%d%H%M%S")
 module CfMigrate
   class Migrate
     def build_migration
-      File.open("db/migrations/#{TIME_OF_RUN}_migrateQueue_up.sql", 'w') {|f| f.write(get_migration_content + "GO") }
+      if Dir.exists?("db/")
+        File.open("db/migrations/#{TIME_OF_RUN}_migrateQueue_up.sql", 'w') {|f| f.write(get_migration_content + "GO") }
+      end
     end
 
     def get_migration_content
@@ -14,9 +16,11 @@ module CfMigrate
       content = ""
       objects.each do |type|
         tmp = parse_folder("db/#{type}/")
-	    tmp.each do |curr_file|
-	      content = content + "INSERT INTO dbo.migrateQueue ( id, migrationType, name) SELECT newid(), '#{type}', '#{curr_file}'\n"
-	    end
+	    if tmp.is_a?(Array)
+	      tmp.each do |curr_file|
+	        content = content + "INSERT INTO dbo.migrateQueue ( id, migrationType, name) SELECT newid(), '#{type}', '#{curr_file}'\n"
+	      end
+        end
       end
       
       return content
@@ -25,10 +29,14 @@ module CfMigrate
     private 
 
     def parse_folder(folder)
-  	  tmp = Dir.chdir(folder)
-      files = `git ls-files --others --modified | grep '\.sql$'`.split($/)
-      tmp = Dir.chdir(ROOT_DIR)
-      
+  	  files = ""
+
+  	  if Dir.exists?(folder)
+  	    tmp = Dir.chdir(folder)
+        files = `git ls-files --others --modified | grep '\.sql$'`.split($/)
+        tmp = Dir.chdir(ROOT_DIR)
+      end
+
       return files
     end
   end
