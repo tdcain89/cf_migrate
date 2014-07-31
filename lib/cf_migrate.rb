@@ -1,7 +1,7 @@
 require "cf_migrate/version"
 
 module CfMigrate
-  def check
+  def self.check
     sprocs = parse_folder("db/sprocs/")
     functions = parse_folder("db/functions/")
     views = parse_folder("db/views/")
