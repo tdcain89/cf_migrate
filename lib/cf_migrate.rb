@@ -1,6 +1,7 @@
 require "cf_migrate/version"
 
 ROOT_DIR = Dir.pwd
+TIME_OF_RUN = Time.now.strftime("%Y%m%d%H%M%S")
 
 module CfMigrate
   class Migrate
@@ -8,8 +9,10 @@ module CfMigrate
       sprocs = get_sprocs
       
       sprocs.each do |sproc|
-        File.open("allObjects.sql", 'w') {|f| f.write("db/sprocs/#{sproc}\n") }
+        File.open("db/migrations/#{TIME_OF_RUN}_migrateQueue.sql", 'w') {|f| f.write("INSERT INTO dbo.migrateQueue ( id, type, file) SELECT newid(), sprocs, #{sproc}\n") }
       end
+
+      File.open("db/migrations/#{TIME_OF_RUN}_migrateQueue.sql", 'w') {|f| f.write("GO") }
     end
 
     def get_sprocs
