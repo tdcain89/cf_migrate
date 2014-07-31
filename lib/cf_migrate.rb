@@ -3,9 +3,10 @@ require "cf_migrate/version"
 module CfMigrate
   class Migrate
     def check
-      sprocs = parse_folder("db/sprocs/")
-      functions = parse_folder("db/functions/")
-      views = parse_folder("db/views/")
+      tmp = Dir.chdir("db/")
+      sprocs = parse_folder("sprocs/")
+      functions = parse_folder("../functions/")
+      views = parse_folder("../views/")
     
       puts "Sprocs to Build: #{sprocs}"
       puts "Functions to Build: #{functions}"
