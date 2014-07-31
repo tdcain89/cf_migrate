@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = CfMigrate::VERSION
   spec.authors       = ["tcain"]
   spec.email         = ["tcain@weblinc.com"]
-  spec.description   = %q{"Cf migrate tool"}
-  spec.summary       = %q{"Assists in building migrations on coldfusion projects"}
+  spec.description   = %q{Cf migrate tool}
+  spec.summary       = %q{Assists in building migrations on coldfusion projects}
   spec.homepage      = ""
   spec.license       = "MIT"
 
