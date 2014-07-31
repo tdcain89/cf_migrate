@@ -15,7 +15,7 @@ module CfMigrate
       objects.each do |type|
         tmp = parse_folder("db/#{type}/")
 	    tmp.each do |curr_file|
-	      content = content + "INSERT INTO dbo.migrateQueue ( id, type, file) SELECT newid(), #{type}, #{curr_file}\n"
+	      content = content + "INSERT INTO dbo.migrateQueue ( id, migrationType, fileName) SELECT newid(), '#{type}', '#{curr_file}'\n"
 	    end
       end
       
