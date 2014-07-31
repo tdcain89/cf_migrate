@@ -1,24 +1,11 @@
 # CfMigrate
 
-TODO: Write a gem description
+This gem is meant to assist with an existing coldfusion script for database migrations. 
+It may or may not evolve into a full coldfusion migration gem.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'cf_migrate'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install cf_migrate
-
-## Usage
-
-TODO: Write usage instructions here
+$ gem install cf_migrate
 
 ## Contributing
 
