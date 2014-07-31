@@ -10,7 +10,7 @@ module CfMigrate
     end
 
     def get_migration_content
-      objects = ["functions, sprocs, views"]
+      objects = ["functions", "sprocs", "views"]
       objects.each do |type|
         tmp = parse_folder("db/#{type}/")
 	    tmp.each do |curr_file|
