@@ -6,7 +6,7 @@ TIME_OF_RUN = Time.now.strftime("%Y%m%d%H%M%S")
 module CfMigrate
   class Migrate
     def build_migration
-      File.open("db/migrations/#{TIME_OF_RUN}_migrateQueue.sql", 'w') {|f| f.write(get_migration_content + "GO") }
+      File.open("db/migrations/#{TIME_OF_RUN}_migrateQueue_up.sql", 'w') {|f| f.write(get_migration_content + "GO") }
     end
 
     def get_migration_content
@@ -15,7 +15,7 @@ module CfMigrate
       objects.each do |type|
         tmp = parse_folder("db/#{type}/")
 	    tmp.each do |curr_file|
-	      content = content + "INSERT INTO dbo.migrateQueue ( id, migrationType, fileName) SELECT newid(), '#{type}', '#{curr_file}'\n"
+	      content = content + "INSERT INTO dbo.migrateQueue ( id, migrationType, name) SELECT newid(), '#{type}', '#{curr_file}'\n"
 	    end
       end
       
