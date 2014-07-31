@@ -5,26 +5,20 @@ TIME_OF_RUN = Time.now.strftime("%Y%m%d%H%M%S")
 
 module CfMigrate
   class Migrate
-    def build_all_objects
-      sprocs = get_sprocs
-      
-      sprocs.each do |sproc|
-        File.open("db/migrations/#{TIME_OF_RUN}_migrateQueue.sql", 'w') {|f| f.write("INSERT INTO dbo.migrateQueue ( id, type, file) SELECT newid(), sprocs, #{sproc}\n") }
+    def build_migration
+      File.open("db/migrations/#{TIME_OF_RUN}_migrateQueue.sql", 'w') {|f| f.write(get_migration_content + "GO") }
+    end
+
+    def get_migration_content
+      objects = ["functions, sprocs, views"]
+      objects.each do |type|
+        tmp = parse_folder("db/#{type}/")
+	    tmp.each do |curr_file|
+	      content = content + "INSERT INTO dbo.migrateQueue ( id, type, file) SELECT newid(), #{type}, #{curr_file}\n"
+	    end
       end
-
-      File.open("db/migrations/#{TIME_OF_RUN}_migrateQueue.sql", 'w') {|f| f.write("GO") }
-    end
-
-    def get_sprocs
-      sprocs = parse_folder("db/sprocs/")
-    end
-
-    def get_functions
-      functions = parse_folder("db/functions/")
-    end
-
-    def get_views
-      views = parse_folder("db/views/")
+      
+      return content
     end
 
     private 
