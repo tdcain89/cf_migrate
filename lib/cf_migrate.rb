@@ -8,8 +8,7 @@ module CfMigrate
       sprocs = get_sprocs
       
       sprocs.each do |sproc|
-        tmp_content = File.Open(sproc, 'r')
-        File.open("allObjects.sql", 'w') {|f| f.write(tmp_content) }
+        File.open("allObjects.sql", 'w') {|f| f.write("db/sprocs/#{sproc}\n") }
       end
     end
 
