@@ -1,3 +1,5 @@
+<a href="https://codeclimate.com/repos/53dae44269568046d10160ae/feed"><img src="https://codeclimate.com/repos/53dae44269568046d10160ae/badges/ef79c7527618d04c9026/gpa.svg" /></a>
+
 # CfMigrate
 
 This gem is meant to assist with an existing coldfusion script for database migrations. 
